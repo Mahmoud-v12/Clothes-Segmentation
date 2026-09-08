@@ -1,0 +1,5 @@
+tensorflow>=2.15.0
+datasets>=2.19.0
+numpy>=1.26.0
+pillow>=10.0.0
+matplotlib>=3.8.0
