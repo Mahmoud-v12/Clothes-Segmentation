@@ -71,12 +71,7 @@ def build_tf_dataset(hf_dataset, training=False, shuffle_buffer=512):
 
 
 def compute_class_weights(hf_dataset, num_classes=None, max_samples=None, seed=None):
-    """
-    Estimates per-class pixel frequency from a random sample of the
-    training set and returns inverse-sqrt-frequency weights (normalized
-    to an average of ~1). Used to upweight rare classes in the loss so
-    the model isn't dominated by the most common classes.
-    """
+  
     num_classes = config.NUM_CLASSES if num_classes is None else num_classes
     max_samples = config.CLASS_WEIGHT_MAX_SAMPLES if max_samples is None else max_samples
     seed = config.SEED if seed is None else seed
@@ -97,12 +92,9 @@ def compute_class_weights(hf_dataset, num_classes=None, max_samples=None, seed=N
             if 0 <= v < num_classes:
                 counts[v] += c
 
-    # Avoid division by zero for classes that never appeared in the sample
     counts = np.clip(counts, 1, None)
     freq = counts / counts.sum()
 
-    # Inverse sqrt frequency: smoother than plain 1/freq, avoids exploding
-    # weights for extremely rare classes while still boosting them.
     weights = 1.0 / np.sqrt(freq)
     weights = weights / weights.mean()
 
