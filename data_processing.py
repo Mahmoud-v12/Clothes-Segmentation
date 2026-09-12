@@ -1,8 +1,3 @@
-"""
-Preprocessing, augmentation, tf.data.Dataset construction, and
-class-weight estimation for the segmentation pipeline.
-"""
-
 import numpy as np
 import tensorflow as tf
 
