@@ -1,8 +1,6 @@
 """
 Central configuration for the clothes segmentation pipeline.
 
-Change hyperparameters, dataset settings, or output paths here instead
-of editing the scripts themselves.
 """
 
 import tensorflow as tf
