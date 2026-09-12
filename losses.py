@@ -17,8 +17,7 @@ def multiclass_dice_loss(y_true, y_pred, smooth=1e-6, class_weights=None):
     dice_per_class = (2.0 * intersection + smooth) / (denominator + smooth)
 
     if class_weights is not None:
-        # Weighted average across classes instead of a plain mean, so
-        # rare classes contribute more to the loss.
+      
         weighted_dice = tf.reduce_sum(dice_per_class * class_weights, axis=-1) / tf.reduce_sum(class_weights)
     else:
         weighted_dice = tf.reduce_mean(dice_per_class, axis=-1)
@@ -27,10 +26,7 @@ def multiclass_dice_loss(y_true, y_pred, smooth=1e-6, class_weights=None):
 
 
 def weighted_focal_loss(y_true, y_pred, gamma=2.0, class_weights=None):
-    # Focal loss down-weights easy, already-correct pixels and focuses
-    # training on hard / misclassified ones -- important on an
-    # imbalanced 18-class mask where a few dominant classes would
-    # otherwise dominate the gradient.
+ 
     y_true = tf.cast(y_true, tf.int32)
     y_true_one_hot = tf.one_hot(y_true, depth=config.NUM_CLASSES)
     y_true_one_hot = tf.cast(y_true_one_hot, tf.float32)
@@ -48,13 +44,7 @@ def weighted_focal_loss(y_true, y_pred, gamma=2.0, class_weights=None):
 
 
 def make_combined_loss(class_weights_tf):
-    """
-    Returns a combined_loss(y_true, y_pred) closure bound to the given
-    per-class weights, ready to pass to model.compile(loss=...).
-
-    Dice correlates directly with IoU, so it's weighted equally with
-    focal loss (0.5 / 0.5) to push mIoU up specifically.
-    """
+   
     def combined_loss(y_true, y_pred):
         focal = weighted_focal_loss(y_true, y_pred, gamma=2.0, class_weights=class_weights_tf)
         dice = multiclass_dice_loss(y_true, y_pred, class_weights=class_weights_tf)
@@ -82,7 +72,6 @@ def mean_iou_metric(y_true, y_pred):
 
     iou = (intersection + 1e-6) / (union + 1e-6)
 
-    # Ignore classes that don't exist in the ground truth for this batch
     valid = union > 0
     iou = tf.boolean_mask(iou, valid)
 
