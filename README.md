@@ -4,7 +4,7 @@ A deep-learning pipeline that segments clothes and body parts from images of peo
 
 The model performs **18-class human/clothing parsing** (background, clothing items, accessories, body parts) using a **DeepLabV3+ architecture with a ResNet50 backbone**, trained on the [`mattmdjaga/human_parsing_dataset`](https://huggingface.co/datasets/mattmdjaga/human_parsing_dataset) (ATR dataset, 17,706 images).
 
-See [`REPORT.md`](REPORT.pdf) for the full write-up (dataset choice, architecture, loss function, evaluation, and limitations).
+See [`REPORT.pdf`](REPORT.pdf) for the full write-up (dataset choice, architecture, loss function, evaluation, and limitations).
 
 ---
 
