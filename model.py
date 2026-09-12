@@ -50,30 +50,24 @@ def build_deeplabv3_resnet50(input_shape=None, num_classes=None):
 
     backbone = ResNet50(include_top=False, weights="imagenet", input_tensor=inputs)
 
-    # High-level features for ASPP (stride 16)
     high_level = backbone.get_layer("conv4_block6_out").output
 
-    # Low-level features for the skip connection (stride 4) -- this is
-    # the key addition that turns DeepLabV3 into DeepLabV3+
+  
     low_level = backbone.get_layer("conv2_block3_out").output
 
     x = aspp_block(high_level, filters=256)
 
-    # Upsample ASPP output up to the low-level feature map's resolution
+
     low_h, low_w = low_level.shape[1], low_level.shape[2]
     x = layers.Resizing(low_h, low_w, interpolation="bilinear")(x)
 
-    # Project low-level features to fewer channels before concatenating
-    # (48 channels, as in the original DeepLabV3+ paper -- keeps the skip
-    # connection from dominating the richer ASPP features)
+   
     low_level_proj = layers.Conv2D(48, 1, padding="same", use_bias=False)(low_level)
     low_level_proj = layers.BatchNormalization()(low_level_proj)
     low_level_proj = layers.ReLU()(low_level_proj)
 
-    # Fuse high-level context with low-level spatial detail
     x = layers.Concatenate()([x, low_level_proj])
 
-    # Refine the fused features
     x = layers.Conv2D(256, 3, padding="same", use_bias=False)(x)
     x = layers.BatchNormalization()(x)
     x = layers.ReLU()(x)
@@ -82,7 +76,6 @@ def build_deeplabv3_resnet50(input_shape=None, num_classes=None):
     x = layers.BatchNormalization()(x)
     x = layers.ReLU()(x)
 
-    # Upsample back to original image size
     x = layers.Resizing(config.IMAGE_HEIGHT, config.IMAGE_WIDTH, interpolation="bilinear")(x)
 
     outputs = layers.Conv2D(num_classes, 1, padding="same", activation="softmax")(x)
