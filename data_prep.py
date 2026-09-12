@@ -10,13 +10,7 @@ def load_raw_dataset():
 
 
 def split_dataset(full_dataset, val_ratio=None, test_ratio=None, seed=None):
-    """
-    Splits a HuggingFace dataset into train / val / test.
 
-    Matches the original notebook: first split off (val_ratio + test_ratio)
-    as a temporary set, then split that temporary set in half. Defaults
-    to 80% / 10% / 10%.
-    """
     val_ratio = config.VAL_RATIO if val_ratio is None else val_ratio
     test_ratio = config.TEST_RATIO if test_ratio is None else test_ratio
     seed = config.SEED if seed is None else seed
@@ -35,7 +29,6 @@ def split_dataset(full_dataset, val_ratio=None, test_ratio=None, seed=None):
 
 
 def load_and_split_dataset():
-    """Convenience wrapper: load + split in one call."""
     full_dataset = load_raw_dataset()
     return split_dataset(full_dataset)
 
