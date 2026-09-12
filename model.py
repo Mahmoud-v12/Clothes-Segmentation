@@ -1,7 +1,3 @@
-"""
-DeepLabV3+ (ResNet50 backbone) segmentation architecture.
-"""
-
 from tensorflow.keras import layers, Model
 from tensorflow.keras.applications import ResNet50
 
