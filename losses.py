@@ -1,9 +1,3 @@
-"""
-Loss functions and the mean-IoU metric used to train/evaluate the
-segmentation model: a class-weighted combination of focal loss and
-Dice loss, plus a mean-IoU metric usable inside model.fit / evaluate.
-"""
-
 import tensorflow as tf
 
 import config
