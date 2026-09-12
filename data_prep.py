@@ -1,13 +1,3 @@
-"""
-Loads the human parsing dataset from the Hugging Face Hub and splits
-it into train / validation / test subsets.
-
-Run directly to sanity-check the split sizes:
-    python data_prep.py
-
-Or import load_and_split_dataset() from train.py / eval.py.
-"""
-
 from datasets import load_dataset
 
 import config
