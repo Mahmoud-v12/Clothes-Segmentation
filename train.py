@@ -22,9 +22,7 @@ def main():
     print("TensorFlow:", tf.__version__)
     print("Num GPUs:", len(tf.config.list_physical_devices("GPU")))
 
-    # ------------------------------------------------------------------
-    # Data
-    # ------------------------------------------------------------------
+  
     train_data, val_data, test_data = data_prep.load_and_split_dataset()
     print("Train:", len(train_data))
     print("Validation:", len(val_data))
@@ -33,9 +31,7 @@ def main():
     train_tf = data_processing.build_tf_dataset(train_data, training=True)
     val_tf = data_processing.build_tf_dataset(val_data, training=False)
 
-    # ------------------------------------------------------------------
-    # Class weights + loss (weights estimated from a sample of train_data)
-    # ------------------------------------------------------------------
+   
     class_weights = data_processing.compute_class_weights(train_data)
     class_weights_tf = tf.constant(class_weights, dtype=tf.float32)
 
@@ -45,9 +41,7 @@ def main():
 
     combined_loss = losses.make_combined_loss(class_weights_tf)
 
-    # ------------------------------------------------------------------
-    # Model
-    # ------------------------------------------------------------------
+
     model = model_module.build_deeplabv3_resnet50()
     model.summary()
 
@@ -58,9 +52,7 @@ def main():
         metrics=["sparse_categorical_accuracy", losses.mean_iou_metric],
     )
 
-    # ------------------------------------------------------------------
-    # Callbacks
-    # ------------------------------------------------------------------
+    
     callbacks = [
         tf.keras.callbacks.ModelCheckpoint(
             config.BEST_MODEL_PATH, monitor="val_loss", save_best_only=True, verbose=1
@@ -80,9 +72,7 @@ def main():
         ),
     ]
 
-    # ------------------------------------------------------------------
-    # Train
-    # ------------------------------------------------------------------
+ 
     history = model.fit(
         train_tf,
         validation_data=val_tf,
