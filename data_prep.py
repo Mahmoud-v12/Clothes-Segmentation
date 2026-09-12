@@ -4,7 +4,6 @@ import config
 
 
 def load_raw_dataset():
-    """Downloads (or loads from cache) the human parsing dataset."""
     dataset = load_dataset(config.DATASET_NAME)
     return dataset["train"]
 
