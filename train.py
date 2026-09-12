@@ -1,12 +1,3 @@
-"""
-Trains the DeepLabV3+ (ResNet50) clothes/body segmentation model.
-
-Usage:
-    python train.py
-
-All hyperparameters and paths live in config.py.
-"""
-
 import random
 
 import numpy as np
