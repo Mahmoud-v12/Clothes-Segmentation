@@ -12,11 +12,7 @@ import losses
 
 
 def load_trained_model(model_path=None):
-    """
-    Loads a saved model. class_weights only affect the loss during
-    training, so a dummy (all-ones) weighting is used here -- it does
-    not change evaluation or inference results.
-    """
+  
     model_path = config.FINAL_MODEL_PATH if model_path is None else model_path
 
     dummy_weights = tf.ones(config.NUM_CLASSES, dtype=tf.float32)
