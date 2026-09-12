@@ -1,12 +1,3 @@
-"""
-Evaluates a trained model on the held-out test split: overall metrics,
-per-class IoU, qualitative predictions, and inference on an arbitrary
-external image.
-
-Usage:
-    python eval.py
-"""
-
 import random
 
 import numpy as np
