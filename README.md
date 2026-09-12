@@ -1,6 +1,6 @@
 # Clothes Segmentation — DeepLabV3+ (ResNet50)
 
-A deep-learning pipeline that segments clothes and body parts from images of people, built for the **CVCY002 — Computer Vision Engineer** assessment (Cyshield).
+A deep-learning pipeline that segments clothes and body parts from images of people.
 
 The model performs **18-class human/clothing parsing** (background, clothing items, accessories, body parts) using a **DeepLabV3+ architecture with a ResNet50 backbone**, trained on the [`mattmdjaga/human_parsing_dataset`](https://huggingface.co/datasets/mattmdjaga/human_parsing_dataset) (ATR dataset, 17,706 images).
 
